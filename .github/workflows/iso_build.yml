@@ -24,8 +24,8 @@ jobs:
     needs: [prepare-release]
     strategy:
       matrix:
-        EDITION: [kde]
-        BRANCH: [unstable]
+        EDITION: [biglinux]
+        BRANCH: [stable]
         SCOPE: [minimal]
     steps:
       - 
@@ -39,7 +39,7 @@ jobs:
           format: 'YY.MM'   
       -
         name: image-build-upload
-        uses: manjaro/manjaro-iso-action@main
+        uses: biglinux/biglinux-iso-action@main
         with:
           edition: ${{ matrix.edition }}
           branch: ${{ matrix.branch }}
@@ -47,6 +47,7 @@ jobs:
           version: ${{ steps.time.outputs.time }}-development
           kernel: linux515
           code-name: "Nightly-Build"
+          iso-profiles-repo: 'https://github.com/biglinux/iso-profiles'
           release-tag: ${{ needs.prepare-release.outputs.release_tag }}
       -
         name: rollback
